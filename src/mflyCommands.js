@@ -339,11 +339,25 @@ var mflyCommands = function () {
         },
 
         next: function () {
-            doControlStatement(prefix + "control/next");
+            var url = 'control/next';
+            if (_isWeb() && !!sessionStorage.viewerInteractiveContext) {
+                var interactiveContext = JSON.parse(sessionStorage.viewerInteractiveContext);
+                if (interactiveContext.type === 'collection') {
+                    url += '?collection=' + interactiveContext.id;
+                }
+            }
+            doControlStatement(prefix + url);
         },
 
         previous: function () {
-            doControlStatement(prefix + "control/previous");
+            var url = 'control/previous';
+            if (_isWeb() && !!sessionStorage.viewerInteractiveContext) {
+                var interactiveContext = JSON.parse(sessionStorage.viewerInteractiveContext);
+                if (interactiveContext.type === 'collection') {
+                    url += '?collection=' + interactiveContext.id;
+                }
+            }
+            doControlStatement(prefix + url);
         },
 
         refresh: function () {

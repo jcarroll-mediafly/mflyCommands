@@ -542,15 +542,33 @@ exports.deleteKey = deleteKey;
 "use strict";
 var item_1 = require('./item');
 var device_1 = require('./device');
+function appendContextToUrl(url) {
+    if (device_1.isWeb() && !!sessionStorage['viewerInteractiveContext']) {
+        var interactiveContext = JSON.parse(sessionStorage['viewerInteractiveContext']);
+        if (interactiveContext.type === 'collection') {
+            url += '?collection=' + interactiveContext.id;
+        }
+        if (interactiveContext.type === 'search') {
+            url += '?term=' + interactiveContext.term;
+        }
+    }
+    return url;
+}
 function close() {
-    window.location.href = '/interactive-redirect/v5/items/__self__/back';
+    var url = '/interactive-redirect/v5/items/__self__/back';
+    url = appendContextToUrl(url);
+    window.location.href = url;
 }
 exports.close = close;
 function next() {
-    window.location.href = '/interactive-redirect/v5/items/__self__/next';
+    var url = '/interactive-redirect/v5/items/__self__/next';
+    url = appendContextToUrl(url);
+    window.location.href = url;
 }
 exports.next = next;
 function previous() {
+    var url = '/interactive-redirect/v5/items/__self__/previous';
+    url = appendContextToUrl(url);
     window.location.href = '/interactive-redirect/v5/items/__self__/previous';
 }
 exports.previous = previous;

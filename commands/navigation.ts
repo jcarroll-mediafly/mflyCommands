@@ -1,15 +1,34 @@
 import { getCurrentItem, getItem } from './item'
 import { isWeb } from './device'
 
+function appendContextToUrl(url) {
+	if (isWeb() && !!sessionStorage['viewerInteractiveContext']) {
+		var interactiveContext = JSON.parse(sessionStorage['viewerInteractiveContext'])
+		if (interactiveContext.type === 'collection') {
+			url += '?collection=' + interactiveContext.id
+		}
+		if (interactiveContext.type === 'search') {
+			url += '?term=' + interactiveContext.term
+		}
+	}
+	return url
+}
+
 export function close() {
-	window.location.href = '/interactive-redirect/v5/items/__self__/back'
+	var url = '/interactive-redirect/v5/items/__self__/back'
+	url = appendContextToUrl(url);
+	window.location.href = url
 }
 
 export function next() {
-	window.location.href = '/interactive-redirect/v5/items/__self__/next'
+	var url = '/interactive-redirect/v5/items/__self__/next'
+	url = appendContextToUrl(url)
+	window.location.href = url
 }
 
 export function previous() {
+	var url = '/interactive-redirect/v5/items/__self__/previous'
+	url = appendContextToUrl(url)
 	window.location.href = '/interactive-redirect/v5/items/__self__/previous'
 }
 

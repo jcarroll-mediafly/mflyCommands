@@ -12,6 +12,10 @@ export function showSecondScreenOptions() {
 	return post('control/show-ui', { ui: 'second-screen'})
 }
 
+export function emailFile(dataUrl) {
+	return post('control/email', { dataUrl })
+}
+
 export function email(id) {
 	return post('control/email', { id })
 }

@@ -25,6 +25,10 @@ function showSecondScreenOptions() {
     return internalMethods_1.post('control/show-ui', { ui: 'second-screen' });
 }
 exports.showSecondScreenOptions = showSecondScreenOptions;
+function emailFile(dataUrl) {
+    return internalMethods_1.post('control/email', { dataUrl: dataUrl });
+}
+exports.emailFile = emailFile;
 function email(id) {
     return internalMethods_1.post('control/email', { id: id });
 }
